@@ -5,7 +5,8 @@ import { RegistrarProductoComponent } from './components/registrar-producto/regi
 
 const routes: Routes = [
   { path:'', component: ListadoProductosComponent },
-  { path:'register-product', component: RegistrarProductoComponent }
+  { path:'register-product', component: RegistrarProductoComponent },
+  { path:'edit-product/:id', component: RegistrarProductoComponent }
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../../core/services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listado-productos',
@@ -15,7 +16,10 @@ export class ListadoProductosComponent implements OnInit {
   currentPage = 1;
   totalPages = 0;
 
-  constructor(private  apiService: ApiService){}
+  constructor(
+    private  apiService: ApiService,
+    private router: Router
+  ){}
 
   ngOnInit(): void {
     this.apiService.doGet('bp/products', {}, (data: any) => {
@@ -53,7 +57,9 @@ export class ListadoProductosComponent implements OnInit {
     this.lProductsFiltered = this.lProducts.slice(start, end);
   }
 
-  editarProducto(producto:any){}
+  editarProducto(producto:any){
+    this.router.navigate(['/edit-product', producto.id]);
+  }
 
   eliminarProducto(idProducto:string){}
 

@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { ApiService } from '../../../../core/services/api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Utils } from '../../../../core/utils/utils';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-registrar-producto',
@@ -12,21 +13,41 @@ import { Utils } from '../../../../core/utils/utils';
 export class RegistrarProductoComponent implements OnInit, AfterViewInit {
   productForm: FormGroup= new FormGroup({});
   @ViewChild('inputId') inputIdRef!: ElementRef;
+  isEditMode: boolean = false;
+  productData : any = null
 
   constructor(
     private apiService: ApiService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute
   ){}
 
   ngOnInit() {
     this.productForm = this.fb.group({
-      id: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
-      name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
-      description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
-      logo: ['', Validators.required],
-      date_release: ['', Validators.required],
-      date_revision:  [{ value: '', disabled: true }]
-    });
+        id: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(10)]],
+        name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+        description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
+        logo: ['', Validators.required],
+        date_release: ['', Validators.required],
+        date_revision:  [{ value: '', disabled: true }]
+      });
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if(id){
+      this.apiService.doGet('bp/products/'+id, {}, (data: any) => {
+        this.productData = data;
+        this.productForm.patchValue({
+          id: data.id,
+          name: data.name,
+          description: data.description,
+          logo: data.logo,
+          date_release: data.date_release,
+          date_revision: data.date_revision
+        });
+        this.productForm.get('id')?.disable();
+        this.isEditMode = true;
+      });
+    }
   }
 
   ngAfterViewInit() {
@@ -37,31 +58,47 @@ export class RegistrarProductoComponent implements OnInit, AfterViewInit {
 
   saveProduct(){
     if (this.productForm.valid) {
-      const datos = this.productForm.value;
-      this.apiService.doPost('bp/products', datos, (response: any) => {
-        console.log("Producto registrado:", response);
-        // Aquí puedes manejar la respuesta después de registrar el producto
-        // Por ejemplo, redirigir a otra página o mostrar un mensaje de éxito
-      });
+      const datos = this.productForm.getRawValue();
+      if(this.isEditMode){
+        this.apiService.doPut('bp/products/'+datos.id, datos, (response: any) => {
+          console.log("Producto editado:", response);
+        });
+      }else{
+        this.apiService.doPost('bp/products', datos, (response: any) => {
+          console.log("Producto registrado:", response);
+        });
+      }
+      
     } else {
       this.productForm.markAllAsTouched();
     }
   }
 
   clearForm(){
-    this.productForm.reset();
-    this.productForm.markAsPristine();
-    this.productForm.markAsUntouched();
-    setTimeout(() => {
-      this.inputIdRef.nativeElement.focus();
-    }, 0);
+    if(this.isEditMode) {
+      this.productForm.patchValue({
+          id: this.productData.id,
+          name: this.productData.name,
+          description: this.productData.description,
+          logo: this.productData.logo,
+          date_release: this.productData.date_release,
+          date_revision: this.productData.date_revision
+      });
+    }else{
+      this.productForm.reset();
+      this.productForm.markAsPristine();
+      this.productForm.markAsUntouched();
+      setTimeout(() => {
+        this.inputIdRef.nativeElement.focus();
+      }, 0);
+    }
+    
   }
 
   verifyExist(){
     const id = this.productForm.get('id')?.value;
     if (id && this.productForm.get('id')?.valid) {
       this.apiService.doGet('bp/products/verification/'+id, {  }, (existe: any) => {
-        console.log("Verificación de ID:", existe);
         if (existe) {
         // Puedes poner un error personalizado en el formulario
         this.productForm.get('id')?.setErrors({ idExistente: true });
@@ -83,7 +120,6 @@ export class RegistrarProductoComponent implements OnInit, AfterViewInit {
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
     fechaSeleccionada.setHours(0, 0, 0, 0);
-    console.log("validar fecha:"+(fechaSeleccionada < hoy));
     if (fechaSeleccionada < hoy) {
       control?.setErrors({ fechaPasada: true });
     } else {
@@ -94,6 +130,7 @@ export class RegistrarProductoComponent implements OnInit, AfterViewInit {
       }
       fechaSeleccionada.setFullYear(fechaSeleccionada.getFullYear() + 1);
       this.productForm.get('date_revision')?.setValue(Utils.formatDate(fechaSeleccionada));
+      const datos = this.productForm.value;
     }
   }
 }
