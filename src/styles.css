@@ -69,6 +69,10 @@ table {
   border-spacing: 64px 20px;
 }
 
+tbody tr {
+  border-bottom: 1px solid #ccc;
+}
+
 
 th{
     font-family: 'Ubuntu', sans-serif;
@@ -83,10 +87,26 @@ td{
     font-style: normal;
 }
 
+b{
+    color: #555555;
+}
+
 input{
     height: 32px;
     border-radius: 6px;
     border: solid 1px #dfe6ef;
+}
+
+select {
+  width: 100px;       /* Aumenta el ancho */
+  height: 35px;       /* Aumenta la altura */
+  padding: 8px 10px;  /* Espacio interno */
+  border: 1px solid #ccc;
+  border-radius: 6px; /* Bordes redondeados */
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
 }
 
 .container {

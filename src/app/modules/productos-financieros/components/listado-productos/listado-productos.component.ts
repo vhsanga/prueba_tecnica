@@ -11,6 +11,10 @@ export class ListadoProductosComponent implements OnInit {
   lProducts: any[] = [];
   lProductsFiltered: any[] = [];
   filter:string = '';
+  pageSize = 5;
+  currentPage = 1;
+  totalPages = 0;
+
   constructor(private  apiService: ApiService){}
 
   ngOnInit(): void {
@@ -18,6 +22,7 @@ export class ListadoProductosComponent implements OnInit {
       console.log("Productos obtenidos:", data);
       this.lProducts = data;
       this.lProductsFiltered = data;
+      this.updatePaginatedItems();
     });
   }
 
@@ -34,6 +39,18 @@ export class ListadoProductosComponent implements OnInit {
     this.lProductsFiltered = this.lProducts.filter(p =>
       p.name.toLowerCase().includes(filtroLower)
     );
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.updatePaginatedItems();
+  }
+
+  updatePaginatedItems() {
+    const start = (this.currentPage - 1) * this.pageSize;
+    const end = start + this.pageSize;
+    this.totalPages = Math.ceil(this.lProducts.length / this.pageSize);
+    this.lProductsFiltered = this.lProducts.slice(start, end);
   }
 
   editarProducto(producto:any){}

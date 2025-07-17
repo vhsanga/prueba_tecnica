@@ -60,5 +60,21 @@
                 </td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">
+                    <b> Mostrando {{ lProductsFiltered.length }} resultados</b>
+                </td>
+                <td style="text-align: right;">
+                    <select id="pageSize" [(ngModel)]="pageSize" (change)="onPageChange(1)">
+                        <option [value]="5">5</option>
+                        <option [value]="10">10</option>
+                        <option [value]="20">20</option>
+                    </select>
+                </td>
+            </tr>
+        </tfoot>
+
     </table>
+
 </div>
