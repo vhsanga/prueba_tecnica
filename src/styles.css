@@ -1,1 +1,95 @@
 /* You can add global styles to this file, and also import other style files */
+
+@font-face {
+  font-family: 'Merriweather';
+  src: url('./assets/fonts/merriweather/Merriweather-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  src: url('./assets/fonts/merriweather/Merriweather-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  src: url('./assets/fonts/merriweather/Merriweather-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('./assets/fonts/ubuntu/Ubuntu-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('./assets/fonts/ubuntu/Ubuntu-Bold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('./assets/fonts/ubuntu/Ubuntu-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('./assets/fonts/ubuntu/Ubuntu-Light.ttf') format('truetype');
+  font-weight: 200;
+  font-style: light;
+}
+
+body{
+    background-color: #f4f6f9;
+    font-family: 'Merriweather', serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #0f265c;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+table {
+  margin: 0 auto;
+  background-color: white;
+  padding: 24px;
+  border-collapse: separate;
+  border-spacing: 64px 20px;
+}
+
+
+th{
+    font-family: 'Ubuntu', sans-serif;
+    color: #555555;
+    font-style: bold;
+    align-items: center; /* Alinea verticalmente al centro */
+    gap: 6px; 
+}
+
+td{
+    font-family: 'Ubuntu', sans-serif;
+    font-style: normal;
+}
+
+.is-text-center{
+    text-align: center;
+}
+
+.circle-avatar{
+    padding: 10px;
+    border-radius: 20px;
+    background-color: #dfe6ef;
+}

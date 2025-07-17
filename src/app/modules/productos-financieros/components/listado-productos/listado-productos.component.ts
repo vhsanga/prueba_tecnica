@@ -18,6 +18,14 @@ export class ListadoProductosComponent implements OnInit {
     });
   }
 
+
+  getIniciales(nombre: string): string {
+  if (!nombre) return '';
+  const palabras = nombre.trim().toUpperCase().split(/\s+/);
+  const iniciales = palabras.slice(0, 2).map(p => p[0]).join('');
+  return iniciales;
+}
+
   editarProducto(producto:any){}
 
   eliminarProducto(idProducto:string){}
