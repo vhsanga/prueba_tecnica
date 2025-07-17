@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from '../../../../core/services/api.service';
 import { Router } from '@angular/router';
+import { ModalService } from '../../../../core/services/modal.service';
 
 @Component({
   selector: 'app-listado-productos',
@@ -19,7 +20,8 @@ export class ListadoProductosComponent implements OnInit {
 
   constructor(
     private  apiService: ApiService,
-    private router: Router
+    private router: Router,
+    private modalService: ModalService
   ){}
 
   ngOnInit(): void {
@@ -62,17 +64,27 @@ export class ListadoProductosComponent implements OnInit {
     this.router.navigate(['/edit-product', producto.id]);
   }
 
-  eliminarProducto(idProducto:string){}
+  eliminarProducto(product:any){
+    console.log("Eliminar producto con ID:", product.id);
+    this.modalService.showConfirmation('¿Estás seguro de eliminar el producto   '+product.name+'?', () => {
+      this.apiService.doDelete('bp/products/'+product.id, (response: any) => {
+        console.log("Producto eliminado:", response);
+        this.lProducts = this.lProducts.filter(p => p.id !== product.id);
+        this.searchItems(); 
+        this.updatePaginatedItems(); 
+      });
+    });
+  }
 
   toggleDropdown(id: string): void {
     if (this.openedDropdownId === id) {
-      this.openedDropdownId = null; // Cierra si está abierto
+      this.openedDropdownId = null; 
     } else {
-      this.openedDropdownId = id; // Abre el que se ha hecho clic
+      this.openedDropdownId = id; 
     }
   }
 
-  // Cierra si se hace clic fuera del dropdown
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
