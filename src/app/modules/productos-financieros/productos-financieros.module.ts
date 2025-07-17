@@ -3,17 +3,22 @@ import { CommonModule } from '@angular/common';
 
 import { ProductosFinancierosRoutingModule } from './productos-financieros-routing.module';
 import { ListadoProductosComponent } from './components/listado-productos/listado-productos.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RegistrarProductoComponent } from './components/registrar-producto/registrar-producto.component';
+import { HeaderComponent } from '../../shared/header/header.component';
 
 
 @NgModule({
   declarations: [
-    ListadoProductosComponent
+    ListadoProductosComponent,
+    RegistrarProductoComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,
     ProductosFinancierosRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ProductosFinancierosModule { }

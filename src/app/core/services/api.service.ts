@@ -38,7 +38,12 @@ export class ApiService {
         this.get(url, params).subscribe({
             next: (response:any) => {
                 //this.modalService.closeLoading();
-                callback(response.data);
+                if(response.data) {
+                  callback(response.data);
+                }else{
+                  callback(response);
+                }
+                
             },
             error: (error) => {
                 //this.modalService.closeLoading();

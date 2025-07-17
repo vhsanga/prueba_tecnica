@@ -109,6 +109,14 @@ select {
   transition: border-color 0.3s ease;
 }
 
+input.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+  border: 1px solid red;
+  box-shadow: 0 0 3px red;
+}
+
+
 .container {
   max-width: 1500px;
   margin: 0 auto;
@@ -129,4 +137,55 @@ select {
 
 .mt-2{
     margin-top: 2rem;
+}
+
+.card-header {
+  font-family: 'Ubuntu', sans-serif;
+  color: #555555;
+  padding: 1rem;
+  text-align: center;
+  border-bottom: solid 3px #555555
+}
+
+.card-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.primary-button {
+    font-family: 'Ubuntu', sans-serif;
+    height: 50px;
+    max-height: 50px;
+    background: #fd0;
+    color: #0f265c;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.secondary-button {
+    background: #e8eaec;
+    color: #0f265c;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    padding: 8px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-weight: bold;
+    height: 50px;
+    text-decoration: none;
+}
+
+div{
+    font-family: 'Ubuntu', sans-serif;
 }
