@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ApiService } from '../../../../core/services/api.service';
 import { Router } from '@angular/router';
 
@@ -15,6 +15,7 @@ export class ListadoProductosComponent implements OnInit {
   pageSize = 5;
   currentPage = 1;
   totalPages = 0;
+  openedDropdownId: string | null = null;
 
   constructor(
     private  apiService: ApiService,
@@ -62,6 +63,23 @@ export class ListadoProductosComponent implements OnInit {
   }
 
   eliminarProducto(idProducto:string){}
+
+  toggleDropdown(id: string): void {
+    if (this.openedDropdownId === id) {
+      this.openedDropdownId = null; // Cierra si está abierto
+    } else {
+      this.openedDropdownId = id; // Abre el que se ha hecho clic
+    }
+  }
+
+  // Cierra si se hace clic fuera del dropdown
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.dropdown')) {
+      this.openedDropdownId = null;
+    }
+  }
 
   
 }
