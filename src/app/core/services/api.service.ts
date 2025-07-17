@@ -1,24 +1,24 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class Apiservices {
+export class ApiService {
 
   private baseUrl = environment.apiBaseUrl; 
 
     constructor(
         private http: HttpClient,
-        //private modalService: ModalService,
     ){}
 
-    post(url: string, data: any, callback: Function) {
+    doPost(url: string, data: any, callback: Function) {
         //this.modalService.showLoading();
-        this.http.post<any>(`${this.baseUrl}/${url}`, data).subscribe({
-            next: (response) => {
+        this.post(url, data).subscribe({
+            next: (response:any) => {
                 //this.modalService.closeLoading();
                 if(response.ok){
                     callback(response.data);
@@ -31,9 +31,45 @@ export class Apiservices {
                 if(error.error.msg){
                     //this.modalService.show(error.error.msg);
                 }else{
-                   // this.modalService.show(error.message);
+                    //this.modalService.show(error.message);
                 }
             }
         })
+    }
+
+    doGet(url: string, params: any, callback: Function) {
+        //this.modalService.showLoading();
+        this.get(url, params).subscribe({
+            next: (response:any) => {
+                //this.modalService.closeLoading();
+                if(response.ok){
+                    callback(response.data);
+                }else{
+                    //this.modalService.show(response.error);
+                }
+            },
+            error: (error) => {
+                //this.modalService.closeLoading();
+                if(error.error.msg){
+                    //this.modalService.show(error.error.msg);
+                }else{
+                    //this.modalService.show(error.message);
+                }
+            }
+        })
+    }
+
+    get<T>(url: string, params?: any): Observable<T> {
+      let httpParams = new HttpParams();
+      if (params) {
+        for (let key in params) {
+          httpParams = httpParams.set(key, params[key]);
+        }
+      }
+      return this.http.get<T>(`${this.baseUrl}/${url}`, { params: httpParams });
+    }
+
+    post<T>(url: string, data: any): Observable<T> {
+      return this.http.post<T>(`${this.baseUrl}/${url}`, data);
     }
 }
