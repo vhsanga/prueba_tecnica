@@ -63,7 +63,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 table {
-  margin: 0 auto;
   background-color: white;
   padding: 24px;
   border-collapse: separate;
@@ -84,6 +83,20 @@ td{
     font-style: normal;
 }
 
+input{
+    height: 32px;
+    border-radius: 6px;
+    border: solid 1px #dfe6ef;
+}
+
+.container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .is-text-center{
     text-align: center;
 }
@@ -92,4 +105,8 @@ td{
     padding: 10px;
     border-radius: 20px;
     background-color: #dfe6ef;
+}
+
+.mt-2{
+    margin-top: 2rem;
 }
