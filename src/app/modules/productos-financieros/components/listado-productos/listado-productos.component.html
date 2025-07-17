@@ -1,0 +1,22 @@
+<h1>Lista de productos</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Tipo</th>
+            <th>Fecha de creación</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of lProducts">
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.description }}</td>
+            <td>
+                <button (click)="editarProducto(item)">Editar</button>
+                <button (click)="eliminarProducto(item.id)">Eliminar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

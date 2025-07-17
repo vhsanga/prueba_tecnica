@@ -20,11 +20,7 @@ export class ApiService {
         this.post(url, data).subscribe({
             next: (response:any) => {
                 //this.modalService.closeLoading();
-                if(response.ok){
-                    callback(response.data);
-                }else{
-                    //this.modalService.show(response.error);
-                }
+                callback(response.data);
             },
             error: (error) => {
                 //this.modalService.closeLoading();
@@ -42,11 +38,7 @@ export class ApiService {
         this.get(url, params).subscribe({
             next: (response:any) => {
                 //this.modalService.closeLoading();
-                if(response.ok){
-                    callback(response.data);
-                }else{
-                    //this.modalService.show(response.error);
-                }
+                callback(response.data);
             },
             error: (error) => {
                 //this.modalService.closeLoading();
