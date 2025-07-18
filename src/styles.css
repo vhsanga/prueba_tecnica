@@ -431,15 +431,7 @@ div{
   color: #333;
 }
 
-.form-group input[type="text"],
-.form-group input[type="date"] {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  width: 100%;
-  box-sizing: border-box;
-}
+
 
 .error {
   color: red;
@@ -469,10 +461,6 @@ div{
 
 
 
-.secondary-button {
-  background-color: #ccc;
-  color: #333;
-}
 
 
 @media (max-width: 600px) {
