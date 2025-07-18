@@ -17,6 +17,7 @@ export class ListadoProductosComponent implements OnInit {
   currentPage = 1;
   totalPages = 0;
   openedDropdownId: string | null = null;
+  isLoading: boolean = true;
 
   constructor(
     private  apiService: ApiService,
@@ -29,6 +30,7 @@ export class ListadoProductosComponent implements OnInit {
       this.lProducts = data;
       this.lProductsFiltered = data;
       this.updatePaginatedItems();
+      this.isLoading = false;
     });
   }
 

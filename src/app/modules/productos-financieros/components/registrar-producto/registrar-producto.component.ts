@@ -16,6 +16,7 @@ export class RegistrarProductoComponent implements OnInit, AfterViewInit {
   @ViewChild('inputId') inputIdRef!: ElementRef;
   isEditMode: boolean = false;
   productData : any = null
+  isLoadingForm: boolean = true;
 
   constructor(
     private apiService: ApiService,
@@ -48,7 +49,10 @@ export class RegistrarProductoComponent implements OnInit, AfterViewInit {
         });
         this.productForm.get('id')?.disable();
         this.isEditMode = true;
+        this.isLoadingForm = false;
       });
+    }else{
+      this.isLoadingForm = false;
     }
   }
 

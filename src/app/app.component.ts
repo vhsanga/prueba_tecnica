@@ -3,6 +3,7 @@ import { ModalService } from './core/services/modal.service';
 import { ConfirmationModalComponent } from './shared/confirmation-modal/confirmation-modal.component';
 import { SuccessModalComponent } from './shared/success-modal/success-modal.component';
 import { ErrorModalComponent } from './shared/error-modal/error-modal.component';
+import { LoadingModalComponent } from './shared/loading-modal/loading-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent {
   @ViewChild(ConfirmationModalComponent) modalConfirmationComponent!: ConfirmationModalComponent;
   @ViewChild(SuccessModalComponent) modalSuceesComponent!: SuccessModalComponent;
   @ViewChild(ErrorModalComponent) modalErrorComponent!: ErrorModalComponent;
+  @ViewChild(LoadingModalComponent) loadingErrorComponent!: LoadingModalComponent;
   
   title = 'prueba_tecnica_softka';
 
@@ -22,6 +24,6 @@ export class AppComponent {
   ) {}
 
   ngAfterViewInit() {
-    this.modalService.register(this.modalConfirmationComponent, this.modalSuceesComponent, this.modalErrorComponent);
+    this.modalService.register(this.modalConfirmationComponent, this.modalSuceesComponent, this.modalErrorComponent, this.loadingErrorComponent);
   }
 }

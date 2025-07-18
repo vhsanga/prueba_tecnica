@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
 import { ModalService } from './modal.service';
 
 
@@ -17,15 +17,20 @@ export class ApiService {
         private modalService: ModalService
     ){}
 
-    doPost(url: string, data: any, callback: Function) {
-        //this.modalService.showLoading();
+    sleep(ms: number) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async doPost(url: string, data: any, callback: Function) {
+        this.modalService.showLoading("Espere...");
+        await this.sleep(2000);
         this.post(url, data).subscribe({
             next: (response:any) => {
-                //this.modalService.closeLoading();
+                this.modalService.closeLoading();
                 callback(response);
             },
             error: (error) => {
-                //this.modalService.closeLoading();
+                this.modalService.closeLoading();
                 if(error.msg){
                     this.modalService.showError(error.error.msg);
                 }else{
@@ -35,11 +40,10 @@ export class ApiService {
         })
     }
 
-    doGet(url: string, params: any, callback: Function) {
-        //this.modalService.showLoading();
+    async doGet(url: string, params: any, callback: Function) {
+        await this.sleep(2000);
         this.get(url, params).subscribe({
             next: (response:any) => {
-                //this.modalService.closeLoading();
                 if(response.data) {
                   callback(response.data);
                 }else{
@@ -48,7 +52,6 @@ export class ApiService {
                 
             },
             error: (error) => {
-                //this.modalService.closeLoading();
                 if(error.msg){
                     this.modalService.showError(error.error.msg);
                 }else{
@@ -59,15 +62,16 @@ export class ApiService {
     }
 
 
-    doPut(url: string, data: any, callback: Function) {
-        //this.modalService.showLoading();
+    async doPut(url: string, data: any, callback: Function) {
+        this.modalService.showLoading("Espere...");
+        await this.sleep(2000);
         this.put(url, data).subscribe({
             next: (response:any) => {
-                //this.modalService.closeLoading();
+                this.modalService.closeLoading();
                 callback(response);
             },
             error: (error) => {
-                //this.modalService.closeLoading();
+                this.modalService.closeLoading();
                 if(error.msg){
                     this.modalService.showError(error.error.msg);
                 }else{
@@ -77,15 +81,16 @@ export class ApiService {
         })
     }
 
-    doDelete(url: string,  callback: Function) {
-        //this.modalService.showLoading();
+    async doDelete(url: string,  callback: Function) {
+        this.modalService.showLoading("Espere...");
+        await this.sleep(2000);
         this.delete(url).subscribe({
             next: (response:any) => {
-                //this.modalService.closeLoading();
+                this.modalService.closeLoading();
                 callback(response);
             },
             error: (error) => {
-                //this.modalService.closeLoading();
+                this.modalService.closeLoading();
                 if(error.msg){
                     this.modalService.showError(error.error.msg);
                 }else{

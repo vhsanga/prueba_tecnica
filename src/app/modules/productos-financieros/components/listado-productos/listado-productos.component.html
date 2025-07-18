@@ -41,7 +41,29 @@
                 <th class="col-acciones"></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="isLoading">
+            <tr *ngFor="let i of [1, 2, 3, 4, 5]">
+                <td>
+                    <div class="skeleton skeleton-text"></div>
+                </td>
+                <td>
+                    <div class="skeleton skeleton-text"></div>
+                </td>
+                <td>
+                    <div class="skeleton skeleton-text"></div>
+                </td>
+                <td>
+                    <div class="skeleton skeleton-text"></div>
+                </td>
+                <td>
+                    <div class="skeleton skeleton-text"></div>
+                </td>
+                <td class="col-acciones">
+                    <div class="skeleton skeleton-button"></div>
+                </td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="!isLoading">
             <tr *ngFor="let item of lProductsFiltered">
                 <td>
                     <div class="circle-avatar"> {{ getIniciales(item.name) }} </div>
