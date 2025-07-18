@@ -3,7 +3,7 @@
 
     <div class="table-header">
         <input class="input-search" type="text" placeholder="Search..." [(ngModel)]="filter" (input)="searchItems()">
-        <a class="primary-button" [routerLink]="['/register-product']"> Agregar</a>
+        <a class="primary-button btn-agregar" [routerLink]="['/register-product']"> Agregar</a>
     </div>
 
     <table class="mt-2">
@@ -85,7 +85,7 @@
         <tfoot>
             <tr>
                 <td colspan="5">
-                    <b> Mostrando {{ lProductsFiltered.length }} resultados</b>
+                    <b> Mostrando {{ lProductsFiltered.length }} de {{lProducts.length}} resultados</b>
                 </td>
                 <td style="text-align: right;">
                     <select id="pageSize" [(ngModel)]="pageSize" (change)="onPageChange(1)">

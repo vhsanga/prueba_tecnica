@@ -3,6 +3,7 @@ import { ApiService } from '../../../../core/services/api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Utils } from '../../../../core/utils/utils';
 import { ActivatedRoute } from '@angular/router';
+import { ModalService } from '../../../../core/services/modal.service';
 
 @Component({
   selector: 'app-registrar-producto',
@@ -19,7 +20,8 @@ export class RegistrarProductoComponent implements OnInit, AfterViewInit {
   constructor(
     private apiService: ApiService,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: ModalService
   ){}
 
   ngOnInit() {
@@ -57,20 +59,23 @@ export class RegistrarProductoComponent implements OnInit, AfterViewInit {
   }
 
   saveProduct(){
+    
     if (this.productForm.valid) {
       const datos = this.productForm.getRawValue();
       if(this.isEditMode){
         this.apiService.doPut('bp/products/'+datos.id, datos, (response: any) => {
-          console.log("Producto editado:", response);
+          this.modalService.showSuccess(response.message);
         });
       }else{
         this.apiService.doPost('bp/products', datos, (response: any) => {
-          console.log("Producto registrado:", response);
+          this.modalService.showSuccess(response.message);
+          this.productForm.reset();
         });
       }
       
     } else {
       this.productForm.markAllAsTouched();
+      this.modalService.showError("Por favor, completa todos los campos requeridos.");
     }
   }
 

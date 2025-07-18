@@ -26,7 +26,6 @@ export class ListadoProductosComponent implements OnInit {
 
   ngOnInit(): void {
     this.apiService.doGet('bp/products', {}, (data: any) => {
-      console.log("Productos obtenidos:", data);
       this.lProducts = data;
       this.lProductsFiltered = data;
       this.updatePaginatedItems();
@@ -65,13 +64,12 @@ export class ListadoProductosComponent implements OnInit {
   }
 
   eliminarProducto(product:any){
-    console.log("Eliminar producto con ID:", product.id);
     this.modalService.showConfirmation('¿Estás seguro de eliminar el producto   '+product.name+'?', () => {
       this.apiService.doDelete('bp/products/'+product.id, (response: any) => {
-        console.log("Producto eliminado:", response);
         this.lProducts = this.lProducts.filter(p => p.id !== product.id);
         this.searchItems(); 
         this.updatePaginatedItems(); 
+        this.modalService.showSuccess(response.message);
       });
     });
   }

@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import { ModalService } from './modal.service';
 
 
 @Injectable({
@@ -13,6 +14,7 @@ export class ApiService {
 
     constructor(
         private http: HttpClient,
+        private modalService: ModalService
     ){}
 
     doPost(url: string, data: any, callback: Function) {
@@ -20,14 +22,14 @@ export class ApiService {
         this.post(url, data).subscribe({
             next: (response:any) => {
                 //this.modalService.closeLoading();
-                callback(response.data);
+                callback(response);
             },
             error: (error) => {
                 //this.modalService.closeLoading();
-                if(error.error.msg){
-                    //this.modalService.show(error.error.msg);
+                if(error.msg){
+                    this.modalService.showError(error.error.msg);
                 }else{
-                    //this.modalService.show(error.message);
+                    this.modalService.showError(error.message);
                 }
             }
         })
@@ -47,10 +49,10 @@ export class ApiService {
             },
             error: (error) => {
                 //this.modalService.closeLoading();
-                if(error.error.msg){
-                    //this.modalService.show(error.error.msg);
+                if(error.msg){
+                    this.modalService.showError(error.error.msg);
                 }else{
-                    //this.modalService.show(error.message);
+                    this.modalService.showError(error.message);
                 }
             }
         })
@@ -62,14 +64,14 @@ export class ApiService {
         this.put(url, data).subscribe({
             next: (response:any) => {
                 //this.modalService.closeLoading();
-                callback(response.data);
+                callback(response);
             },
             error: (error) => {
                 //this.modalService.closeLoading();
-                if(error.error.msg){
-                    //this.modalService.show(error.error.msg);
+                if(error.msg){
+                    this.modalService.showError(error.error.msg);
                 }else{
-                    //this.modalService.show(error.message);
+                    this.modalService.showError(error.message);
                 }
             }
         })
@@ -80,14 +82,14 @@ export class ApiService {
         this.delete(url).subscribe({
             next: (response:any) => {
                 //this.modalService.closeLoading();
-                callback(response.data);
+                callback(response);
             },
             error: (error) => {
                 //this.modalService.closeLoading();
-                if(error.error.msg){
-                    //this.modalService.show(error.error.msg);
+                if(error.msg){
+                    this.modalService.showError(error.error.msg);
                 }else{
-                    //this.modalService.show(error.message);
+                    this.modalService.showError(error.message);
                 }
             }
         })
